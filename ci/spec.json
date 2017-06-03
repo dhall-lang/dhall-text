@@ -3,7 +3,7 @@
 , "description": "Pull requests"
 , "nixexprinput": "src"
 , "nixexprpath": "ci/spec.nix"
-, "checkinterval": "10"
+, "checkinterval": "240"
 , "schedulingshares": 1
 , "enableemail": true
 , "emailoverride": ""

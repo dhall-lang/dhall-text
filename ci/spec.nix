@@ -15,7 +15,7 @@ let
 
     nixexprpath = "release.nix";
 
-    checkinterval = 10;
+    checkinterval = 240;
 
     schedulingshares = 1;
 
