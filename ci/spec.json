@@ -1,0 +1,28 @@
+{ "enabled": 1
+, "hidden": false
+, "description": "Pull requests"
+, "nixexprinput": "src"
+, "nixexprpath": "ci/spec.nix"
+, "checkinterval": "10"
+, "schedulingshares": 1
+, "enableemail": true
+, "emailoverride": ""
+, "keepnr": 3
+, "inputs":
+  { "nixpkgs":
+    { "type": "git"
+    , "value": "git://github.com/NixOS/nixpkgs.git"
+    , "emailresponsible": false
+    }
+  , "src":
+    { "type": "git"
+    , "value": "https://github.com/Gabriel439/Haskell-Dhall-Text-Library.git gabriel/testci"
+    , "emailresponsible": false
+    }
+  , "pullRequestsJSON":
+    { "type": "githubpulls"
+    , "value": "Gabriel439 Haskell-Dhall-Text-Library"
+    , "emailresponsible": false
+    }
+  }
+}
