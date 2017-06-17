@@ -17,9 +17,7 @@ let
 
           dhall-text =
             pkgs.haskell.lib.justStaticExecutables
-              (pkgs.haskell.lib.doJailbreak
-                (haskellPackagesNew.callPackage ./default.nix { })
-              );
+              (haskellPackagesNew.callPackage ./default.nix { });
         };
       };
     };
