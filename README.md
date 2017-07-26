@@ -1,4 +1,4 @@
-# `dhall-text 1.0.0`
+# `dhall-text 1.0.1`
 
 This `dhall-text` package provides a `dhall-to-text` executable which you can
 use to template text using the Dhall configuration language.
