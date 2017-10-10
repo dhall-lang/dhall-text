@@ -1,7 +1,7 @@
 { mkDerivation, base, dhall, optparse-generic, stdenv, text }:
 mkDerivation {
   pname = "dhall-text";
-  version = "1.0.2";
+  version = "1.0.3";
   src = ./.;
   isLibrary = false;
   isExecutable = true;
