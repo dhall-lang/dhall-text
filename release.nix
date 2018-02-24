@@ -18,6 +18,8 @@ let
           dhall-text =
             pkgs.haskell.lib.justStaticExecutables
               (haskellPackagesNew.callPackage ./default.nix { });
+
+          prettyprinter = haskellPackagesNew.callPackage ./prettyprinter.nix { };
         };
       };
     };
