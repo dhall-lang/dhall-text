@@ -1,29 +1,29 @@
-# You can build this repository using Nix by running:
-#
-#     $ nix-build -A dhall-text release.nix
-#
-# You can also open up this repository inside of a Nix shell by running:
-#
-#     $ nix-shell -A dhall-text.env release.nix
-#
-# ... and then Nix will supply the correct Haskell development environment for
-# you
 let
+  fetchNixpkgs = import ./nix/fetchNixpkgs.nix;
+
+  nixpkgs = fetchNixpkgs {
+    rev = "804060ff9a79ceb0925fe9ef79ddbf564a225d47";
+
+    sha256 = "01pb6p07xawi60kshsxxq1bzn8a0y4s5jjqvhkwps4f5xjmmwav3";
+
+    outputSha256 = "0ga345hgw6v2kzyhvf5kw96hf60mx5pbd9c4qj5q4nan4lr7nkxn";
+  };
+
   config = {
     packageOverrides = pkgs: {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: {
-          dhall = haskellPackagesNew.callPackage ./dhall.nix { };
+          dhall = haskellPackagesNew.callPackage ./nix/dhall.nix { };
 
           dhall-text =
-            pkgs.haskell.lib.justStaticExecutables
-              (haskellPackagesNew.callPackage ./default.nix { });
+            pkgs.haskell.lib.failOnAllWarnings
+              (pkgs.haskell.lib.justStaticExecutables
+                (haskellPackagesNew.callPackage ./nix/dhall-text.nix { })
+              );
 
-          formatting =
-            haskellPackagesNew.callPackage ./formatting.nix { };
+          formatting = haskellPackagesOld.formatting_6_3_0;
 
-          prettyprinter =
-            haskellPackagesNew.callPackage ./prettyprinter.nix { };
+          prettyprinter = haskellPackagesOld.prettyprinter_1_2_0_1;
         };
       };
     };
@@ -33,5 +33,4 @@ let
     import <nixpkgs> { inherit config; };
 
 in
-  { dhall-text = pkgs.haskellPackages.dhall-text;
-  }
+  { inherit (pkgs.haskellPackages) dhall-text; }

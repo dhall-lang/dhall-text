@@ -2,7 +2,7 @@
 mkDerivation {
   pname = "dhall-text";
   version = "1.0.9";
-  src = ./.;
+  src = ./..;
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [ base dhall optparse-generic text ];
