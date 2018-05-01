@@ -30,7 +30,7 @@ let
   };
 
   pkgs =
-    import <nixpkgs> { inherit config; };
+    import nixpkgs { inherit config; };
 
 in
   { inherit (pkgs.haskellPackages) dhall-text; }
