@@ -1,25 +1,63 @@
-{-# LANGUAGE DataKinds          #-}
-{-# LANGUAGE DeriveAnyClass     #-}
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE ExplicitNamespaces #-}
-{-# LANGUAGE OverloadedStrings  #-}
-{-# LANGUAGE TypeOperators      #-}
-{-# LANGUAGE RecordWildCards    #-}
+{-# LANGUAGE RecordWildCards #-}
 
-import Options.Generic (Generic, ParseRecord, type (<?>)(..))
+import Control.Applicative ((<|>))
+import Data.Monoid ((<>))
+import Options.Applicative (Parser, ParserInfo)
 
 import qualified Data.Text.Lazy.IO
+import qualified Data.Version
 import qualified Dhall
-import qualified Options.Generic
+import qualified Options.Applicative
+import qualified Paths_dhall_text
 
-newtype Options = Options
-    { explain :: Bool <?> "Explain error messages in detail"
-    } deriving (Generic, ParseRecord)
+data Options
+    = Default { explain :: Bool }
+    | Version
+
+parseOptions :: Parser Options
+parseOptions = parseVersion <|> parseDefault
+  where
+    parseVersion =
+        Options.Applicative.subparser
+            (   Options.Applicative.command "version" parserInfoVersion
+            <>  Options.Applicative.metavar "version"
+            )
+      where
+        parserInfoVersion =
+            Options.Applicative.info parser
+                (   Options.Applicative.fullDesc
+                <>  Options.Applicative.progDesc "Display version"
+                )
+
+        parser =
+            Options.Applicative.helper <*> pure Version
+
+    parseDefault = Default <$> parseExplain
+      where
+        parseExplain =
+            Options.Applicative.switch
+                (   Options.Applicative.long "explain"
+                <>  Options.Applicative.help "Explain error messages in detail"
+                )
+
+parserInfoOptions :: ParserInfo Options
+parserInfoOptions =
+    Options.Applicative.info
+        (Options.Applicative.helper <*> parseOptions)
+        (   Options.Applicative.progDesc "Template text using Dhall"
+        <>  Options.Applicative.fullDesc
+        )
 
 main :: IO ()
 main = do
-    Options {..} <- Options.Generic.getRecord "Template text using Dhall"
-    let detail = if unHelpful explain then Dhall.detailed else id
-    code <- Data.Text.Lazy.IO.getContents
-    text <- detail (Dhall.input Dhall.auto code)
-    Data.Text.Lazy.IO.putStr text
+    options <- Options.Applicative.execParser parserInfoOptions
+
+    case options of
+        Default {..} -> do
+            let detail = if explain then Dhall.detailed else id
+            code <- Data.Text.Lazy.IO.getContents
+            text <- detail (Dhall.input Dhall.auto code)
+            Data.Text.Lazy.IO.putStr text
+
+        Version -> do
+            putStrLn (Data.Version.showVersion Paths_dhall_text.version)

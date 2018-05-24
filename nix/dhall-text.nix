@@ -1,11 +1,13 @@
-{ mkDerivation, base, dhall, optparse-generic, stdenv, text }:
+{ mkDerivation, base, dhall, optparse-applicative, stdenv, text }:
 mkDerivation {
   pname = "dhall-text";
   version = "1.0.10";
   src = ./..;
   isLibrary = false;
   isExecutable = true;
-  executableHaskellDepends = [ base dhall optparse-generic text ];
+  executableHaskellDepends = [
+    base dhall optparse-applicative text
+  ];
   description = "Template text using Dhall";
   license = stdenv.lib.licenses.bsd3;
 }
