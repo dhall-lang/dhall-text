@@ -1,2 +1,4 @@
 resolver: lts-11.9
-allow-newer: true
+
+extra-deps:
+  - dhall-1.14.0
