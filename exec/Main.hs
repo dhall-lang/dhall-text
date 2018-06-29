@@ -8,7 +8,7 @@
 
 import Options.Generic (Generic, ParseRecord, type (<?>)(..))
 
-import qualified Data.Text.Lazy.IO
+import qualified Data.Text.IO
 import qualified Dhall
 import qualified Options.Generic
 
@@ -20,6 +20,6 @@ main :: IO ()
 main = do
     Options {..} <- Options.Generic.getRecord "Template text using Dhall"
     let detail = if unHelpful explain then Dhall.detailed else id
-    code <- Data.Text.Lazy.IO.getContents
+    code <- Data.Text.IO.getContents
     text <- detail (Dhall.input Dhall.auto code)
-    Data.Text.Lazy.IO.putStr text
+    Data.Text.IO.putStr text
