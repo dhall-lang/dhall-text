@@ -4,7 +4,7 @@ import Control.Applicative ((<|>))
 import Data.Monoid ((<>))
 import Options.Applicative (Parser, ParserInfo)
 
-import qualified Data.Text.Lazy.IO
+import qualified Data.Text.IO
 import qualified Data.Version
 import qualified Dhall
 import qualified Options.Applicative
@@ -55,9 +55,9 @@ main = do
     case options of
         Default {..} -> do
             let detail = if explain then Dhall.detailed else id
-            code <- Data.Text.Lazy.IO.getContents
+            code <- Data.Text.IO.getContents
             text <- detail (Dhall.input Dhall.auto code)
-            Data.Text.Lazy.IO.putStr text
+            Data.Text.IO.putStr text
 
         Version -> do
             putStrLn (Data.Version.showVersion Paths_dhall_text.version)
