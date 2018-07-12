@@ -10,7 +10,7 @@ $ cat Person
 -- Dhall is a typed programming language
 
 -- This file is the type of an anonymous record
-{ name : Text, upvotes : Integer }
+{ name : Text, upvotes : Natural }
 ```
 
 ```haskell
@@ -24,7 +24,7 @@ $ cat people
 
 -- This file has type:
 --
---     ./people : List { name : Text, upvotes : Integer }
+--     ./people : List { name : Text, upvotes : Natural }
 --
 -- ... or just:
 --
@@ -40,7 +40,7 @@ $ cat make-item
     -- supports string interpolation, too, using `${...}` syntax
 ->   ''
     <li class="list-group-item">
-      <span class="badge">${Integer/show person.upvotes}</span>
+      <span class="badge">${Natural/show person.upvotes}</span>
       ${person.name}
     </li>
     ''
