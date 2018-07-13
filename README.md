@@ -53,8 +53,8 @@ $ cat make-item
 ```haskell
 $ cat make-items
     -- You can also import any type or expression by its URL
-    let List/map =  https://raw.githubusercontent.com/dhall-lang/Prelude/master/List/map
-in  let Text/concat =  https://raw.githubusercontent.com/dhall-lang/Prelude/master/Text/concat
+    let List/map =  https://raw.githubusercontent.com/dhall-lang/Prelude/302881a17491f3c72238975a6c3e7aab603b9a96/List/map
+in  let Text/concat =  https://raw.githubusercontent.com/dhall-lang/Prelude/302881a17491f3c72238975a6c3e7aab603b9a96/Text/concat
 in  \(people : List ./Person)
 ->   Text/concat (List/map ./Person Text ./make-item people)
 
