@@ -13,7 +13,13 @@ let
     packageOverrides = pkgs: {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: {
-          dhall = haskellPackagesNew.callPackage ./nix/dhall.nix { };
+          dhall =
+            pkgs.haskell.lib.dontCheck
+              (haskellPackagesNew.callPackage ./nix/dhall.nix { });
+
+          megaparsec = haskellPackagesNew.callPackage ./nix/megaparsec.nix { };
+
+          repline = haskellPackagesNew.callPackage ./nix/repline.nix { };
 
           dhall-text =
             pkgs.haskell.lib.failOnAllWarnings
