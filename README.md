@@ -1,5 +1,7 @@
 # `dhall-text 1.0.13`
 
+This repository has moved to https://github.com/dhall-lang/dhall-haskell/tree/master/dhall-text
+
 This `dhall-text` package provides a `dhall-to-text` executable which you can
 use to template text using the Dhall configuration language.
 
